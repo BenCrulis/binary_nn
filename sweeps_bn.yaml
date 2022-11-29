@@ -1,0 +1,36 @@
+program: binary_nn/train.py
+method: grid
+name: hyperparameter grid search batchnorm
+project: mnist custom
+command:
+  - ./venv/bin/python
+  - -m
+  - binary_nn.train
+  - --seed
+  - 1
+  - --bn
+  - --weight-clipping
+  - 1.0
+  - --hidden
+  - 700,500,300,200
+  - ${args_no_boolean_flags}
+  - --wandb
+  - -v
+  - --run-name
+  - auto
+metric:
+  name: train/accuracy
+  goal: maximize
+parameters:
+  method:
+    values: [GD, DFA, DRTP]
+  epochs:
+    values: [100]
+  init:
+    values: [1e-1, 1e-3]
+  lr:
+    values: [1e-4, 1e-5, 1e-6]
+  binarize:
+    values: [True, False]
+  hidden-act:
+    values: [tanh, signSat]
