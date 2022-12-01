@@ -278,8 +278,11 @@ def main():
 
             loss, xs = learning_algorithm(model, batch_x, batch_y)
             xs = xs[1:]
-            avg_sat = average_neuron_saturation(model, xs)
+            avg_sat, var_acts, var_grads, max_abs_val = average_neuron_saturation(model, xs)
             logs["average saturation"] = avg_sat
+            logs["activation variance"] = var_acts
+            logs["gradient variance"] = var_grads
+            logs["max absolute gradient value"] = max_abs_val
             if weight_clipping:
                 clip_weights(model, weight_clipping)
 
