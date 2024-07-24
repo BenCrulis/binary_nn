@@ -1,7 +1,7 @@
 import numpy as np
 
 from binary_nn.commons.activations import Activation
-from binary_nn.commons.layers import HasGrad, HasBackward
+from binary_nn.commons.layers import HasGrad, HasBackward, Linear
 from binary_nn.commons.losses import MSELoss
 from binary_nn.commons.model import Model
 
@@ -53,4 +53,4 @@ class DirectRandomTargetProjection:
             if isinstance(l, HasGrad):
                 l.apply_grad(self.lr)
 
-        return loss
+        return loss, xs

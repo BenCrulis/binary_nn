@@ -25,7 +25,7 @@ class DFA:
         pass
 
     def __call__(self, model: Model, x, y):
-        y_pred = model(x, train=True)
+        y_pred, xs = model(x, train=True, save_hidden_x=True)
         loss_fn = self.loss_fn
         err = loss_fn.error(y_pred, y)
         loss = loss_fn(y_pred, y)
@@ -42,4 +42,4 @@ class DFA:
             if isinstance(l, HasGrad):
                 l.apply_grad(self.lr)
 
-        return loss
+        return loss, xs
