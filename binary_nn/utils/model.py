@@ -48,10 +48,12 @@ def measure_normal_and_packed_size(model):
 
 def average_neuron_saturation(model, xs, tanh_threshold=2.0):
     pre_acts = []
+    grads = []
     activation_fn = None
     for l, x in zip(model.layers, xs):
         if isinstance(l, Linear):
             pre_acts.append(x)
+            grads.append(l.grad)
         elif isinstance(l, Tanh):
             activation_fn = "tanh"
         elif isinstance(l, (SignSTE, SignSTESat)):
@@ -68,8 +70,20 @@ def average_neuron_saturation(model, xs, tanh_threshold=2.0):
 
     n = 0
     v = 0.0
+    sum_ = 0.0
+    sum_squares = 0.0
     for a in pre_acts:
         v += (np.abs(a) > threshold).sum()
+        sum_ += a.sum()
+        sum_squares += np.square(a).sum()
         n += a.size
 
-    return v/n
+    mean_act = sum_ / n
+    var_act = (sum_squares / n) - np.square(mean_act)
+
+    grads = np.concatenate([x.flatten() for x in grads])
+
+    var_grads = np.var(grads)
+    max_abs_val = np.max(np.abs(grads))
+
+    return v/n, var_act, var_grads, max_abs_val
