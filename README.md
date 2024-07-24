@@ -1,6 +1,4 @@
-# Apports des alternatives à la rétropropagation dans l'apprentissage des réseaux de neurones binaires
-
-## Dépendances
+## Dependencies
 
 ```
 numpy
@@ -13,31 +11,30 @@ tensorflow
 objsize
 ```
 
-`keras` et `tensorflow` sont utilisés uniquement pour
-la partie chargement des jeux de données standard.
+`keras` and `tensorflow` are only used for loading datasets.
 
-## Utilisation
+## Usage
 
-`python -m binary_nn.train --help` affiche toutes les options.
+`python -m binary_nn.train --help` prints all options.
 
-Exemple d'éxécution de l'algorithme DFA sur le jeu de donnée CIFAR10 avec un modèle entièrement binarisé:
+Example of execution of the DFA algorithm on CIFAR10 with an entirely binarized model:
 
 ```sh
 python -m binary_nn.train --dataset CIFAR10 --method DFA --bn --init 0.001 --lr 0.0001 --hidden-act signsat -v -b 128 --epochs 100 --hidden 700,500,300,200 --binarize --weight-clipping 1 --wandb --run-name auto
 ```
 
-Retirez `--wandb` pour ne pas utiliser Weights & Biases.
+Remove the `--wandb` flag in order to disable Weights & Biases logging.
 
-## Structure du projet
+## Project structure
 
-`binary_nn/commons/` contient le code des fonctions et classes communes (fonctions d'activations et couches).
+`binary_nn/commons/` contains the code for the common functions and classes (activation functions and layers)
 
-`binary_nn/training/` contient le code des différents algorithmes: GD (BP), DFA, DRTP.
+`binary_nn/training/` contains the code for the different training algorithms: GD (BP), DFA, DRTP.
 
-`binary_nn/utils/binary.py` contient divers fonctions utilitaires pour la binarisation
+`binary_nn/utils/binary.py` contains binarization utilitaries
 
-`experiments_results/` contient les résultats bruts des expériences extraits depuis Weights & Biases.
+`experiments_results/` contains the raw results of the paper experiments extracted from the Weights & Biases logs.
 
-`scripts/` contient divers scripts utilitaires
+`scripts/` contains diverse utilitary scripts
 
-Les fichiers `sweeps*.yaml` servent à réeffectuer des grid search avec Weights & Biases.
+The `sweeps*.yaml` files are used for initializing grid searches in Weights & Biases.
