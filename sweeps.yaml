@@ -1,0 +1,23 @@
+program: binary_nn/train.py
+method: grid
+command:
+  - ./venv/Scripts/python.exe
+  - -m
+  - binary_nn.train
+  - ${args_no_boolean_flags}
+  - --wandb
+  - -v
+  - --run-name
+  - auto
+metric:
+  name: train/accuracy
+  goal: maximize
+parameters:
+  method:
+    values: [GD, DFA]
+  epochs:
+    values: [5]
+  lr:
+    values: [1e-5, 1e-6]
+  binarize:
+    values: [True, False]
