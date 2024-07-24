@@ -25,6 +25,17 @@ python -m binary_nn.train --dataset CIFAR10 --method DFA --bn --init 0.001 --lr 
 
 Remove the `--wandb` flag in order to disable Weights & Biases logging.
 
+
+## Algorithms
+
+The project contains the code for 3 different algorithms that can train deep feed forward neural networks:
+Backpropagation (GD, BP), Direct Feedback Alignment (DFA) and Direct Random Target Propagation (DRTP).
+
+The difference between the algorithms are illustrated in the next Figure:
+
+![algorithms](figures/algorithms_diagram_bp_dfa_drtp.png)
+
+
 ## Project structure
 
 `binary_nn/commons/` contains the code for the common functions and classes (activation functions and layers)
